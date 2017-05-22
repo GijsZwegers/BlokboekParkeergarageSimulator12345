@@ -1,0 +1,34 @@
+﻿<Page x:Class="BlokboekParkeergarageSimulator.CMS.Pages.CameraPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BlokboekParkeergarageSimulator.CMS.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1124"
+      Width="auto"
+      Height="auto"
+      Background="white"
+      VerticalAlignment="Stretch"
+      HorizontalAlignment="Stretch"
+      Title="CameraPage">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <ComboBox x:Name="cbCameraSelect" Text="Cameras"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></ComboBox>
+        <Button x:Name="btStartCamera" HorizontalAlignment="Stretch" Margin="0,100,0,0" VerticalAlignment="Center" Content="Start" Grid.Column="0" Grid.Row="2" Click="btStartCamera_Click"></Button>
+        <Label x:Name="lbAction" Content="Actie.." HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"></Label>
+        <Image x:Name="pbTest" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1"/>
+
+    </Grid>
+</Page>

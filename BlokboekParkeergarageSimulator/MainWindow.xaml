@@ -1,0 +1,45 @@
+﻿<Window x:Class="BlokboekParkeergarageSimulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlokboekParkeergarageSimulator"
+        mc:Ignorable="d"
+        Title="Parkeerplaats CMS" MinHeight ="675" MinWidth="525" MaxHeight="675" MaxWidth="525" Height="675" Width="525">
+    <Grid Height="665" VerticalAlignment="Top" Margin="0,0,0,-21">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFA0E4DB" Offset="0.005"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="btInloggen" Content="Inloggen" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="281" Height="80" Foreground="#FF2EB3B6" Background="#FFE4F7F5" FontSize="48" BorderThickness="1" BorderBrush="#FF9B9B9B" IsEnabled="False" Click="btInloggen_Click"/>
+        <TextBox x:Name="tbUser" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="80" Width="281" Background="White" MaxLines="1" FontSize="45" TextChanged="TbUser_TextChanged" KeyDown="PressedEnter"/>
+        <PasswordBox x:Name="pbPass" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="81" Width="281" FontSize="58" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="White" KeyDown="PressedEnter"/>
+        <Image x:Name="imLogo" Grid.Column="1" HorizontalAlignment="Left" Height="281" Margin="10,10,0,0" VerticalAlignment="Top" Width="281" Source="Images/MiddenPolder.png">
+            <Image.ToolTip>
+                <ToolTip Placement="Bottom">
+                    <ToolTip.Template>
+                        <ControlTemplate>
+                            <StackPanel>
+                                <TextBlock Margin="20,325,0,0" Text="Mede mogelijk gemaakt door Comp-U-Service"/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </ToolTip.Template>
+                </ToolTip>
+            </Image.ToolTip>
+        </Image>
+    </Grid>
+</Window>
