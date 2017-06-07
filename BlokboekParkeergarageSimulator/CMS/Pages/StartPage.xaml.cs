@@ -12,6 +12,10 @@ using AForge.Video.DirectShow;
 using System.Drawing;
 using System.Threading;
 using AForge.Video;
+using com.google.zxing.qrcode;
+using com.google.zxing.qrcode.detector;
+using COMMON = com.google.zxing.common;
+using com.google.zxing;
 
 namespace BlokboekParkeergarageSimulator.CMS.Pages
 {
@@ -26,6 +30,9 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
         private bool DeviceExist = false;
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource = null;
+        public QRCodeReader reader = new QRCodeReader();
+        public Bitmap current { get; private set; }
+        Bitmap img;
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer QRtimer = new System.Windows.Threading.DispatcherTimer();
@@ -38,6 +45,7 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             QRtimer.Tick += new EventHandler(QRtimer_Tick);
             QRtimer.Interval += new TimeSpan(0, 0, 1);
+            QRtimer.Start();
         }
 
 
@@ -84,7 +92,7 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
             string result = API.GETapiToken(url);
 
             UpdateLog();
-
+             
         }
 
         private void rbAutomatic_Checked(object sender, RoutedEventArgs e)
@@ -190,23 +198,34 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
         //eventhandler if new frame is ready
         private void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            Bitmap img = (Bitmap)eventArgs.Frame.Clone();
+            img = (Bitmap)eventArgs.Frame.Clone();
             //do processing here
             Dispatcher.BeginInvoke(new ThreadStart(delegate
             {
 
                 pbTest.Source = BitmapToImageSource(img);
-
             }
             ));
         }
 
         private void QRtimer_Tick(object sender, EventArgs e)
         {
-            if (videoSource.IsRunning)
+            /*
             {
+                LuminanceSource source = new RGBLuminanceSource(img, img.Width, img.Height);
+                com.google.zxing.BinaryBitmap bitmap = new com.google.zxing.BinaryBitmap(new COMMON.HybridBinarizer(source));
+                Result result;
+                try
+                {
+                    result = new MultiFormatReader().decode(bitmap);
+                    MessageBox.Show(result.Text);
+                }
+                catch (ReaderException re)
+                {
 
-            }
+                    MessageBox.Show(re.Message);
+                }
+            }*/
         }
 
         //close the device safely
