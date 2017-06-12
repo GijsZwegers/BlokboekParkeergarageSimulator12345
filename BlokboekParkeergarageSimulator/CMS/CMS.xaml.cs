@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -64,6 +65,8 @@ namespace BlokboekParkeergarageSimulator.CMS
 
         private void BTLogout_Click(object sender, RoutedEventArgs e)
         {
+            Camerapage.CloseVideoSource();
+            MainPage.CloseVideoSource();
             this.Close();
         }
 
@@ -71,20 +74,33 @@ namespace BlokboekParkeergarageSimulator.CMS
 
         private void btControl_Click(object sender, RoutedEventArgs e)
         {
-            PageFrame.Navigate(MainPage);
+            
             Camerapage.CloseVideoSource();
+            PageFrame.Navigate(MainPage);
         }
 
         private void btCameraControl_Click(object sender, RoutedEventArgs e)
         {
-            PageFrame.Navigate(Camerapage);
+            
             MainPage.CloseVideoSource();
+            PageFrame.Navigate(Camerapage);
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             Camerapage.CloseVideoSource();
             MainPage.CloseVideoSource();
+        }
+        private void Window_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void btPersoneel_Click(object sender, RoutedEventArgs e)
+        {
+            Camerapage.CloseVideoSource();
+            MainPage.CloseVideoSource();
+
         }
     }
 }

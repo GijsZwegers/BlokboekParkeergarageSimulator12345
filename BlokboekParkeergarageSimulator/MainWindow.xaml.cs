@@ -1,19 +1,8 @@
 ﻿using BlokboekParkeergarageSimulator.Functions;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BlokboekParkeergarageSimulator
 {
@@ -29,13 +18,14 @@ namespace BlokboekParkeergarageSimulator
         Functions.CheckConnection Connection = new Functions.CheckConnection();
         public MainWindow()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+
         }
 
         private void btInloggen_Click(object sender, RoutedEventArgs e)
         {
             //internet checken in de internetclass
-            if (CheckConnection.CheckInternet())
+            if (CheckConnection.CheckInternet() == true)
             {
                 if (tbUser.Text == "" && pbPass.Password == "")
                 {
@@ -81,7 +71,7 @@ namespace BlokboekParkeergarageSimulator
                 }
             }
             else {
-                MessageBox.Show("Er kan geen connectie met de server gemaakt worden. \nCheck uw internetconnectie of neem contact op met de systeembeheerder");
+                MessageBox.Show("Er kan geen connectie met de server tot stand gebracht worden. \nControleer uw internetconnectie of neem contact op met de systeembeheerder.");
             }
          }
         private void PressedEnter(object sender, KeyEventArgs e)

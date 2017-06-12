@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,21 +12,19 @@ namespace BlokboekParkeergarageSimulator.Functions
     {
         public static bool CheckInternet()
         {
-            string InternetStatus = "false";
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("https://www.avondmtb.nl");
+            request.AllowAutoRedirect = false; // find out if this site is up and don't follow a redirector
+            request.Method = "HEAD";
+            request.Timeout = 3000;
             try
             {
-                //Met deze ping kijkt of de api server online is en of je internet hebt
-                Ping myPing = new Ping();
-                String host = "avondmtb.nl";
-                byte[] buffer = new byte[32];
-                int timeout = 1000;
-                PingOptions pingOptions = new PingOptions();
-                PingReply reply = myPing.Send(host, timeout, buffer, pingOptions);
-                InternetStatus = reply.ToString();
+                
+                // do something with response.Headers to find out information about the request
                 return true;
             }
-            catch (Exception)
+            catch (WebException)
             {
+                //set flag if there was a timeout or some other issues
                 return false;
             }
         }

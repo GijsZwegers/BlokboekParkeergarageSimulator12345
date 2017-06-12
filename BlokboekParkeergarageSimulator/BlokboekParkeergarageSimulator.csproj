@@ -101,6 +101,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CMS\Pages\UserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -119,6 +123,10 @@
     <Compile Include="CMS\Pages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CMS\Pages\UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Functions\BoardWrapper.cs" />
     <Compile Include="Functions\CheckConnection.cs" />
     <Compile Include="JsonClasses\newtonsoftJSON.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -165,6 +173,7 @@
   <ItemGroup>
     <Content Include="Dll\AForge.Video.DirectShow.dll" />
     <Content Include="Dll\AForge.Video.dll" />
+    <Content Include="Dll\K8055D.dll" />
     <Resource Include="Images\NoSignal.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

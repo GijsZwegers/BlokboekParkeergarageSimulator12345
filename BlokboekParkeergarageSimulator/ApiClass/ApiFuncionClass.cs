@@ -82,6 +82,7 @@ namespace BlokboekParkeergarageSimulator.ApiClass
                     streamWriter.Flush();
                     streamWriter.Close();
                 }
+                
 
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))

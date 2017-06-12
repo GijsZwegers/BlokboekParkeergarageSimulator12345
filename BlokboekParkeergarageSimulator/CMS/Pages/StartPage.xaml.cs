@@ -16,6 +16,7 @@ using com.google.zxing.qrcode;
 using com.google.zxing.qrcode.detector;
 using COMMON = com.google.zxing.common;
 using com.google.zxing;
+using System.Windows.Input;
 
 namespace BlokboekParkeergarageSimulator.CMS.Pages
 {
@@ -43,9 +44,8 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
             getCamList();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            QRtimer.Tick += new EventHandler(QRtimer_Tick);
-            QRtimer.Interval += new TimeSpan(0, 0, 1);
-            QRtimer.Start();
+            EventManager.RegisterClassHandler(typeof(Window),
+Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
         }
 
 
@@ -154,6 +154,7 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
 
 
         }
+
         private void getCamList()
         {
             try
@@ -169,9 +170,11 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
                     cbCameraSelect.Items.Add(device.Name);
                 }
                 cbCameraSelect.SelectedIndex = 0;
+                btStartCamera.Visibility = Visibility.Visible;
             }
             catch (ApplicationException)
             {
+                btStartCamera.Visibility = Visibility.Hidden;
                 DeviceExist = false;
                 cbCameraSelect.Items.Add("No capture device on your system");
             }
@@ -208,25 +211,6 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
             ));
         }
 
-        private void QRtimer_Tick(object sender, EventArgs e)
-        {
-            /*
-            {
-                LuminanceSource source = new RGBLuminanceSource(img, img.Width, img.Height);
-                com.google.zxing.BinaryBitmap bitmap = new com.google.zxing.BinaryBitmap(new COMMON.HybridBinarizer(source));
-                Result result;
-                try
-                {
-                    result = new MultiFormatReader().decode(bitmap);
-                    MessageBox.Show(result.Text);
-                }
-                catch (ReaderException re)
-                {
-
-                    MessageBox.Show(re.Message);
-                }
-            }*/
-        }
 
         //close the device safely
         public void CloseVideoSource()
@@ -245,9 +229,8 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-
             // code goes here
-            lbAction.Content = "Device running... " + videoSource.FramesReceived.ToString() + " FPS";
+            lbAction.Content = "Apparaat in gebruik... " + videoSource.FramesReceived.ToString() + " FPS";
         }
 
         private void btStartCamera_Click_1(object sender, RoutedEventArgs e)
@@ -261,13 +244,13 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
                     CloseVideoSource();
                     //videoSource.DesiredFrameRate = 10;
                     videoSource.Start();
-                    lbAction.Content = "Device running...";
+                    lbAction.Content = "Apparaat in gebruik...";
                     btStartCamera.Content = "Stop";
                     dispatcherTimer.Start();
                 }
                 else
                 {
-                    lbAction.Content = "Error: No Device selected.";
+                    lbAction.Content = "Error: Er is geen camera gevonden.";
                 }
             }
             else
@@ -276,6 +259,26 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
                 {
                     CloseVideoSource();
                 }
+            }
+        }
+
+        private void CamRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            getCamList();
+        }
+
+
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+            var isNumber = e.Key >= Key.D0 && e.Key <= Key.D9;
+            var arr = e.Key.ToString().ToCharArray();
+            if (isNumber)
+            {
+                tbWerkNemer.Text = tbWerkNemer.Text + arr[1].ToString();
+            }
+            if (e.Key == Key.Enter)
+            {
+                tbWerkNemer.Text = "";
             }
         }
     }

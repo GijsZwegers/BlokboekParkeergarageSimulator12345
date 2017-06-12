@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:BlokboekParkeergarageSimulator"
         mc:Ignorable="d"
         Title="CMS" Closed="Window_Closed" Icon="../Images/MiddenPolder.png"
+        MinHeight="900" MinWidth="1200"
+        d:DesignHeight="900" d:DesignWidth="1200" ResizeMode="CanResizeWithGrip" Topmost="True"
         >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -48,6 +50,7 @@
                 </Grid.RowDefinitions>
                 <Button Content="Bediening Slagboom" x:Name="btControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Foreground="White" Background="Black" Opacity="0.75" Click="btControl_Click"></Button>
                 <Button Content="Bediening Camera" x:Name="btCameraControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Foreground="White" Background="Black" Opacity="0.75" Click="btCameraControl_Click"></Button>
+                <Button Content="Parkeerplaats Personeel" x:Name="btPersoneel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Foreground="White" Background="Black" Opacity="0.75" Click="btPersoneel_Click"></Button>
                 <Button Content="Afsluiten" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="11" VerticalAlignment="Stretch" Width="auto" Height="auto" Foreground="white" Click="BTLogout_Click">
                     <Button.Background>
                         <SolidColorBrush Color="Black" Opacity="0.75"/>
