@@ -26,6 +26,8 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
     public partial class StartPage : Page
     {
         private string url = null;
+        private string json = null;
+        private string result = null;
         ApiClass.ApiFuncionClass API = new ApiClass.ApiFuncionClass();
         JsonClasses.newtonsoftJSON Convert = new JsonClasses.newtonsoftJSON();
         private bool DeviceExist = false;
@@ -35,17 +37,21 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
         public Bitmap current { get; private set; }
         Bitmap img;
 
+
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer QRtimer = new System.Windows.Threading.DispatcherTimer();
         public StartPage()
         {
             InitializeComponent();
+            double angle = 90;
+            Functions.BoardWrapper.ZetLampjeAan(2);
+            rotateSlagboom(angle);
             UpdateLog();
             getCamList();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             EventManager.RegisterClassHandler(typeof(Window),
-Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
+            Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
         }
 
 
@@ -55,14 +61,12 @@ Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
         {
             btClose.IsEnabled = false;
             double angle = 90;
-
+            
             rotateSlagboom(angle);
-
+            Functions.BoardWrapper.ZetLampjeAan(2);
             url = "https://avondmtb.nl/middenpolder/log/logaction?LogNummer=2";
             string result = API.GETapiToken(url);
-
             UpdateLog();
-
             
             btOpen.IsEnabled = true;
         }
@@ -73,7 +77,7 @@ Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
             double angle = 0;
 
             rotateSlagboom(angle);
-
+            Functions.BoardWrapper.ZetLampjeAan(1);
 
             url = "https://avondmtb.nl/middenpolder/log/logaction?LogNummer=1";
 
@@ -100,13 +104,13 @@ Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
             url = "https://avondmtb.nl/middenpolder/log/logaction?LogNummer=4";
 
             string result = API.GETapiToken(url);
-
+            //automatisch de log updaten 
             UpdateLog();
 
         }
 
 
-        //Zelf geschreven functies
+        //Zelf geschreven functies 
 
         //datagrid sorteren op de eerste column
         public static void SortDataGrid(DataGrid dataGrid, int columnIndex = 0, ListSortDirection sortDirection = ListSortDirection.Descending)
@@ -125,7 +129,7 @@ Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
 
             dataGrid.Items.Refresh();
         }
-        //slagboom draaien dmv animatie
+        //slagboom draaien dmv animatie 
         private void rotateSlagboom(double angle)
         {
             var animation = new DoubleAnimation
@@ -146,7 +150,6 @@ Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
             string result = API.GETapiToken(url);
             JsonClasses.newtonsoftJSON.RootObject response = JsonConvert.DeserializeObject<JsonClasses.newtonsoftJSON.RootObject>(result);
             dgLog.IsReadOnly = true;
-
             dgLog.ItemsSource = response.log.ToList();
 
             SortDataGrid(dgLog);
@@ -278,7 +281,25 @@ Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
             }
             if (e.Key == Key.Enter)
             {
+                
+                url = "https://avondmtb.nl/middenpolder/user/user?BarCode="+tbWerkNemer.Text;
                 tbWerkNemer.Text = "";
+                string result = API.GETapiToken(url);
+                JsonClasses.newtonsoftJSON.RootObject response = JsonConvert.DeserializeObject<JsonClasses.newtonsoftJSON.RootObject>(result);
+                if (response.success)
+                {
+                    url = "https://avondmtb.nl/middenpolder/log/loguser";
+                    json = "{\"LogNummer\": \"3\",    \"Client\": \""+response.user.Name_First+" "+ response.user.Name_Last+"\"}";
+                    result = API.POSTapiToken(url, json);
+                    
+                    rotateSlagboom(0);
+                    btClose.IsEnabled = true;
+                    btOpen.IsEnabled = false;
+                    lbLaatsteUser.Text = "Gebruiker " + response.user.Name_First +" "+ response.user.Name_Last+" is de parkeerplaats opgereden";
+                    Functions.BoardWrapper.ZetLampjeAan(1);
+
+                    UpdateLog();
+                }
             }
         }
     }

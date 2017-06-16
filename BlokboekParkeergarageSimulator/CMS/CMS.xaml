@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="CMS" Closed="Window_Closed" Icon="../Images/MiddenPolder.png"
         MinHeight="900" MinWidth="1200"
-        d:DesignHeight="900" d:DesignWidth="1200" ResizeMode="CanResizeWithGrip" Topmost="True"
+        d:DesignHeight="900" d:DesignWidth="1200" ResizeMode="CanResizeWithGrip"
         >
     <Grid>
         <Grid.ColumnDefinitions>

@@ -18,6 +18,7 @@ namespace BlokboekParkeergarageSimulator.JsonClasses
             public int rechten { get; set; }
             public User user { get; set; }
             public List<Log> log { get; set; }
+            public string userinfo { get; set; }
         }
         //De User class 
         public class User
