@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Json;
+using System.Windows;
 
 namespace BlokboekParkeergarageSimulator.ApiClass
 {
@@ -94,6 +95,8 @@ namespace BlokboekParkeergarageSimulator.ApiClass
             //Deze functie gebruiken wanneer je een GET hebt waarbij je WEL een token nodig hebt
             public string GETapiToken(string url)
             {
+            try
+            {
                 string s;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
@@ -107,6 +110,11 @@ namespace BlokboekParkeergarageSimulator.ApiClass
                     s = streamReader.ReadToEnd();
                 }
                 return s;
+            }
+            catch
+            {
+               return "error";
+            }
             }
             public string GetValueFromJson(string json, string key)
             {

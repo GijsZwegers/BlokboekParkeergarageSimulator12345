@@ -17,6 +17,7 @@ using com.google.zxing.qrcode.detector;
 using COMMON = com.google.zxing.common;
 using com.google.zxing;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace BlokboekParkeergarageSimulator.CMS.Pages
 {
@@ -36,7 +37,7 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
         public QRCodeReader reader = new QRCodeReader();
         public Bitmap current { get; private set; }
         Bitmap img;
-
+        DispatcherTimer idchecker = new DispatcherTimer();
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer QRtimer = new System.Windows.Threading.DispatcherTimer();
@@ -52,9 +53,20 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             EventManager.RegisterClassHandler(typeof(Window),
             Keyboard.KeyUpEvent, new KeyEventHandler(Page_KeyDown), true);
+
+            idchecker.Tick += new EventHandler(idchecker_Tick);
+            idchecker.Interval = new TimeSpan(0, 0, 0, 1);
+            idchecker.Start();
         }
 
-
+        private void idchecker_Tick(object sender, EventArgs e)
+        {
+            bool[] Channel = Functions.BoardWrapper.magnet();
+            if(Channel[4])
+            {
+                Functions.BoardWrapper.ZetLampjeAan(2);
+            }
+        }
 
         //Event handlers
         private void btClose_Click(object sender, RoutedEventArgs e)
@@ -132,6 +144,7 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
         //slagboom draaien dmv animatie 
         private void rotateSlagboom(double angle)
         {
+
             var animation = new DoubleAnimation
             {
                 To = angle,
@@ -288,10 +301,10 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
                 JsonClasses.newtonsoftJSON.RootObject response = JsonConvert.DeserializeObject<JsonClasses.newtonsoftJSON.RootObject>(result);
                 if (response.success)
                 {
-                    url = "https://avondmtb.nl/middenpolder/log/loguser";
+                    /*url = "https://avondmtb.nl/middenpolder/log/loguser";
                     json = "{\"LogNummer\": \"3\",    \"Client\": \""+response.user.Name_First+" "+ response.user.Name_Last+"\"}";
                     result = API.POSTapiToken(url, json);
-                    
+                    */
                     rotateSlagboom(0);
                     btClose.IsEnabled = true;
                     btOpen.IsEnabled = false;
@@ -301,6 +314,11 @@ namespace BlokboekParkeergarageSimulator.CMS.Pages
                     UpdateLog();
                 }
             }
+        }
+
+        private void btBlokkeergebruiker_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("De gebruiker is geblokkeerd");
         }
     }
     

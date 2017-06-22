@@ -28,6 +28,7 @@
         <ComboBox x:Name="cbCameraSelect" Text="Cameras"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom"></ComboBox>
         <Button x:Name="CamRefresh" Width="150" Height="30" Margin="0,100,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Ververs Cameralijst" Grid.Column="1" Grid.RowSpan="2" Click="CamRefresh_Click"></Button>
         <Button x:Name="btStartCamera" Width="150" Height="30"  Margin="0,100,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Start" Grid.Column="1" Grid.RowSpan="2" Click="btStartCamera_Click_1"></Button>
+        <Button x:Name="btBlokkeergebruiker" Width="150" Height="30" Content="Blokkeer gebruiker" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Click="btBlokkeergebruiker_Click"></Button>
         <Label x:Name="lbAction" Content="Actie.." HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"></Label>
         <Image x:Name="pbTest" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2" Grid.Column="2"/>
         <StackPanel Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0">
